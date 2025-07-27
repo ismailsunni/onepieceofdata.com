@@ -1,32 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>One Piece of Data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="One Piece of Data - Explore Like a Pirate. Analyze Like a Scholar. Interactive data visualization and analytics platform">
+    <meta name="keywords" content="data, analytics, visualization, One Piece, dashboard">
+    <meta name="author" content="Ismail Sunni">
+    <meta property="og:title" content="One Piece of Data">
+    <meta property="og:description" content="Explore Like a Pirate. Analyze Like a Scholar. Interactive data visualization and analytics platform">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://onepieceofdata.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="One Piece of Data">
+    <meta name="twitter:description" content="Explore Like a Pirate. Analyze Like a Scholar. Interactive data visualization and analytics platform">
+
+    <title>One Piece of Data - Interactive Data Analytics</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
     <style type="text/css">
       html {
         overflow: auto;
+        box-sizing: border-box;
       }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: inherit;
+      }
+
       html,
       body,
       div,
       iframe {
-        margin: 0px;
-        padding: 0px;
+        margin: 0;
+        padding: 0;
         height: 100%;
         border: none;
       }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 1;
+        color: #666;
+      }
+
+      .loading.hidden {
+        display: none;
+      }
+
       iframe {
         display: block;
         width: 100%;
+        height: 100%;
         border: none;
         overflow-y: auto;
         overflow-x: hidden;
+        background-color: white;
+      }
+
+      /* Accessibility improvements */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Error fallback */
+      .error-message {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #dc3545;
+        font-size: 18px;
+        z-index: 2;
       }
     </style>
   </head>
   <body>
-    <iframe
-  src="https://onepieceofdata.streamlit.app?embed=true"
-></iframe>
+    <main class="container">
+      <div class="loading" id="loading">
+        <h2>Loading One Piece of Data...</h2>
+        <p>Explore Like a Pirate. Analyze Like a Scholar.</p>
+        <p>Please wait while we prepare your analytics dashboard.</p>
+      </div>
+
+      <div class="error-message" id="error">
+        <h2>Unable to Load Dashboard</h2>
+        <p>Please check your internet connection and try refreshing the page.</p>
+        <button onclick="location.reload()">Refresh Page</button>
+      </div>
+
+      <iframe
+        src="https://onepieceofdata.streamlit.app?embed=true"
+        title="One Piece of Data - Interactive Analytics Dashboard"
+        loading="lazy"
+        onload="hideLoading()"
+        onerror="showError()"
+        aria-label="Interactive data analytics dashboard">
+      </iframe>
+    </main>
+
+    <script>
+      function hideLoading() {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.classList.add('hidden');
+        }
+      }
+
+      function showError() {
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        if (loading) loading.style.display = 'none';
+        if (error) error.style.display = 'block';
+      }
+
+      // Fallback: Hide loading after 10 seconds
+      setTimeout(hideLoading, 10000);
+    </script>
   </body>
 </html>
